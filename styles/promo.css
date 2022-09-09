@@ -1,0 +1,44 @@
+.promo-area{
+  padding: 40px 0;
+}
+
+.promo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 300;
+  color: #fff;
+  padding: 20px 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.promo-item span{
+  margin-top: 10px;
+}
+
+.promo-item:hover {
+  background: #666;
+}
+
+.promo-icon {
+  font-size: 46px;
+}
+
+.promo1 {
+  background: #5a88ca;
+}
+
+.promo2 {
+  background: #ffd900;
+}
+
+.promo3 {
+  background: #fa8072;
+}
+
+.promo4 {
+  background: #4abebd;
+}

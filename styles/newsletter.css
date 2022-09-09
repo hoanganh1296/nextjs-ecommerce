@@ -1,0 +1,9 @@
+.newsletter-wrapper {
+  padding: 8px 0;
+  background: url(https://theme.hstatic.net/1000026716/1000440777/14/bg-register.png) no-repeat scroll left center #dedede;
+}
+.newsletter-content {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+}
