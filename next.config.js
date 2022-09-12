@@ -4,7 +4,8 @@ const path = require('path');
 
 const nextConfig = {
   env: {
-    BASE_URL: 'https://nextjs-ecommerce-sigma-three.vercel.app',
+    // BASE_URL: 'https://nextjs-ecommerce-sigma-three.vercel.app',
+    BASE_URL: 'http://localhost:3000',
     MONGODB_URL:
       'mongodb+srv://hoanganh:0977477617@cluster0.oi0yqm4.mongodb.net/next_ecommerce?retryWrites=true&w=majority',
     ACCESS_TOKEN_SECRET: 'U6z8y~~h!c!&AjucB/z[Gr${n_H9**Gjyb&h8>&JwNJB.x=J6)',

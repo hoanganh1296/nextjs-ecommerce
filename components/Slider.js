@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { useViewport } from '~/hooks/useViewport';
+import {useViewport} from '~/hooks';
 import { SmoothHorizontalScrolling } from '~/utils';
 
 const Slider = (props) => {

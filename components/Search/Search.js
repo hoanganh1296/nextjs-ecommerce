@@ -1,53 +1,88 @@
-import { useContext, useState } from 'react';
-
-import { DataContext } from '~/store/GlobalState';
-import SearchItem from './SearchItem';
-import { getData } from '~/utils/fetchData';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
+import { useClickOutside, useDebounce, useViewport } from '~/hooks';
+import { getData } from '~/utils/fetchData';
+import SearchItem from './SearchItem';
+
 const Search = () => {
-  const { state, dispatch } = useContext(DataContext);
-  const { cart } = state;
-  const [keywords, setKeywords] = useState('');
-  const [result, setResult] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
+  const [showResult, setShowResult] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [windowWidth] = useViewport();
+
+  const debouncedValue = useDebounce(searchValue, 500);
+  const ref = useRef();
+  useClickOutside(ref, () => setShowResult(false));
+
+  useEffect(() => {
+    if (!debouncedValue.trim()) {
+      setSearchResult([]);
+      return;
+    }
+    const fetchApi = async () => {
+      setLoading(true);
+      const res = await getData(
+        `product?limit=${6}&&category=all&sort=&title=${debouncedValue}`,
+      );
+      setSearchResult(res.products);
+      setLoading(false);
+    };
+
+    fetchApi();
+  }, [debouncedValue]);
 
   const handleChangeInput = async (e) => {
-    setKeywords(e.target.value);
-    if (keywords) {
-      const res = await getData(
-        `product?limit=${6}&&category=all&sort=&title=${keywords}`,
-      );
-      if (res.err)
-        return dispatch({ type: 'NOTIFY', payload: { error: res.err } });
-      setResult(res.products);
+    const searchValue = e.target.value;
+    if (!searchValue.startsWith(' ')) {
+      setSearchValue(searchValue);
     }
   };
 
   return (
-    <div className="d-flex flex-grow-1 position-relative">
-      <form className="d-flex flex-grow-1" role="search">
+    <div className="d-flex flex-grow-1 position-relative" ref={ref}>
+      <form className="input-group input-group-sm" role="search">
         <input
-          className="form-control me-2"
+          className="form-control"
           type="search"
           placeholder="Search"
           aria-label="Search"
-          name="keywords"
-          value={keywords}
+          name="searchValue"
+          value={searchValue}
           onChange={handleChangeInput}
+          onFocus={() => setShowResult(true)}
         />
-        <Link href={`/products?search=${keywords}`}>
-          <button className="btn btn-outline-success" type="submit">
-            Search
+        <Link href={`/products?search=${searchValue}`}>
+          <button
+            className="btn btn-danger"
+            type="submit"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          >
+            {loading && windowWidth >= 992 ? (
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            ) : (
+              'Search'
+            )}
           </button>
         </Link>
       </form>
-      <ul className="list-group top-100 mt-1 position-absolute w-100">
-        {result.length > 0 &&
-          keywords.length > 0 &&
-          result.map((result, index) => (
-            <SearchItem key={index} result={result} setKeywords={setKeywords} />
-          ))}
-      </ul>
+      {showResult && (
+        <ul className="list-group top-100 mt-2 position-absolute w-100">
+          {searchResult.length > 0 &&
+            searchResult.map((result, index) => (
+              <SearchItem
+                key={index}
+                result={result}
+                setSearchValue={setSearchValue}
+                onClick={() => console.log(result)}
+              />
+            ))}
+        </ul>
+      )}
     </div>
   );
 };
