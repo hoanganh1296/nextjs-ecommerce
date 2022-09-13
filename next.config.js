@@ -4,18 +4,15 @@ const path = require('path');
 
 const nextConfig = {
   env: {
-    BASE_URL: 'https://nextjs-ecommerce-sigma-three.vercel.app',
+    BASE_URL: process.env.BASE_URL,
     // BASE_URL: 'http://localhost:3000',
-    MONGODB_URL:
-      'mongodb+srv://hoanganh:0977477617@cluster0.oi0yqm4.mongodb.net/next_ecommerce?retryWrites=true&w=majority',
-    ACCESS_TOKEN_SECRET: 'U6z8y~~h!c!&AjucB/z[Gr${n_H9**Gjyb&h8>&JwNJB.x=J6)',
-    REFRESH_TOKEN_SECRET:
-      'ZDqU&XVM84nZbBz2Hbp+ptxp?kpk<nw%!C8GCq=#5^{zrj>?sZ4Z.8E)Vz-xY(8@L[#5adW.T&n~P2A',
-    PAYPAL_CLIENT_ID:
-      'Aa2HLuG-sECjGOVLSUAAKNSjlJsouiAz7g3APECY5gCL34uLJvcBOcrDNsYrbC-AVdvuaV52UIwIK5jo',
-    CLOUD_UPDATE_PRESET: 'nextjs_store',
-    CLOUD_NAME: 'dcnxg5hjv',
-    CLOUD_API: 'https://api.cloudinary.com/v1_1/dcnxg5hjv/image/upload',
+    MONGODB_URL: process.env.MONGODB_URL,
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+    PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
+    CLOUD_UPDATE_PRESET: process.env.CLOUD_UPDATE_PRESET,
+    CLOUD_NAME: process.env.CLOUD_NAME,
+    CLOUD_API: process.env.CLOUD_API,
   },
   images: { domains: ['res.cloudinary.com'] },
   webpack: (config) => {
